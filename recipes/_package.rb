@@ -24,9 +24,9 @@ typo3_source_directory = "#{site_docroot}/typo3_src-#{node['typo3']['version']}"
 
 # download TYPO3 package
 unless File.directory? typo3_source_directory 
-  execute "Download TYPO3 #{node['typo3']['package']} package, TYPO3 version #{node['typo3']['version']}" do
+  execute "Download TYPO3, TYPO3 version #{node['typo3']['version']}" do
     cwd node['apache']['docroot_dir']
-    command "wget http://get.typo3.org/#{node['typo3']['package']}-#{node['typo3']['version']} -O typo3.tgz"
+    command "wget http://get.typo3.org/#{node['typo3']['version']} -O typo3.tgz"
   end
 
   execute "Unpack TYPO3 package" do
@@ -37,7 +37,7 @@ unless File.directory? typo3_source_directory
   ruby_block "Rename TYPO3 package directory" do
     block do
       File.rename(
-        "#{node['apache']['docroot_dir']}/#{node['typo3']['package']}package-#{node['typo3']['version']}", 
+        "#{node['apache']['docroot_dir']}/typo3_src-#{node['typo3']['version']}", 
         "#{site_docroot}"
       )
     end
